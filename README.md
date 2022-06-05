@@ -1,7 +1,7 @@
 # ELIDEK-DB
 Semester project on Databases NTUA Course : Implementation of a database for ELIDEK
 
-Συγγραφείς:  
+Συγγραφείς :  
 Δημήτριος Δαυίδ Γεροκωνσταντής     
 Αθανάσιος Τσουκλείδης-Καρυδάκης  
 Φίλιππος Σεβαστάκης  
