@@ -8,7 +8,7 @@ Semester project on Databases NTUA Course : Implementation of a database for ELI
 
 Οδηγίες Εγκατάστασης :
 Κατεβάζουμε τον φάκελο SQL scripts από το github repository. Επίσης κατεβάζουμε τον φάκελο dbdemo, ο οποίος περιλαμβάνει τα αρχεία python_code.py (που κατασκευάζει την σελίδα της βάσης) και forms.py (όπου ορίζονται κάποιες κατάλληλες κλάσεις αντικειμένων ώστε να επιτευχθεί η CRUD υλοποίηση) και τα html templates της ιστοσελίδας μας. 
-Ανοίγουμε ένα νέο connection στο MYSQL Workbench και τρέχουμε τα δύο SQL scripts (elidek schema.sql και elidek insert.sql) ώστε να κατασκευαστεί η βάση. Τρέχοντας το αρχείο python_code.py κατασκευάζεται η εφαρμογή, η οποία είναι προσβάσιμη μέσα από το URL: http://localhost:3000.
+Κάνουμε start το MySQL module στο XAMPP, ανοίγουμε ένα νέο connection στο MYSQL Workbench και τρέχουμε τα δύο SQL scripts (elidek schema.sql και elidek insert.sql) ώστε να κατασκευαστεί η βάση. Τρέχοντας το αρχείο python_code.py κατασκευάζεται η εφαρμογή, η οποία είναι προσβάσιμη μέσα από το URL: http://localhost:3000.
 
 Requirements:  
 MySQL Workbench 8.0 CE  
