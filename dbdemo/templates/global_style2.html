@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function() {
+        $(this).toggle($(this).find("td:eq(0)").text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+  </script>
+  <style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #E9967A;
+  }
+  </style>
+</head>
+
+    {% include "navbar.html" %}
+
+<body style="background-color:AntiqueWhite;">
+    <!-- all other templates are to be rendered "within" the following block -->
+    {% block content %}
+    {% endblock content %}
+
+    <script src = "{{ url_for('static', filename = 'bootstrap/js/bootstrap.min.js') }}"></script>
+</body>
+
+
+
+</html>

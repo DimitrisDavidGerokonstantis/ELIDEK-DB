@@ -1,0 +1,57 @@
+{% extends "global_style2.html" %}
+{% block content %}
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+</head>
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                  <h2>Query 3.7</h2>
+                  <p>Search</p>
+                  <input id="myInput" type="text" placeholder="Search..">
+                  <br><br>
+                {% if QUERY7|length == 0 %}
+                    <!-- |length is a jinja2 filter that returns the amount of items in a sequence -->
+                    <h1 style="margin-top: 5rem;">No tuples found!</h1>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                  <th>EXECUTIVE</th>
+                                  <th>TOTAL GIVEN FUNDS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="myTable">
+                                {% for q in QUERY7 %}
+                                    <tr>
+                                      <td> {{ q.Executive }} </td>
+                                      <td> {{ q.Total_Given_Funds }} </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

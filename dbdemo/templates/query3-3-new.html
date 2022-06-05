@@ -1,0 +1,68 @@
+{% include "navbar.html" %}
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).find("td:eq(0)").text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #E9967A;
+}
+</style>
+</head>
+<body style="background-color:AntiqueWhite;">
+
+<h2>Query 3.3</h2>
+<p>Search for a scientific field</p>
+<input id="myInput" type="text" placeholder="Search..">
+<br><br>
+{% if QUERY3|length == 0 %}
+<h3>No tuples found...</h3>
+{% else %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>FIELD NAME</th>
+            <th>TITLE</th>
+            <th>RESEARCHER NAME</th>
+            <th>RESEARCHER ROLE</th>
+        </tr>
+    </thead>
+    <tbody id="myTable">
+        {% for q in QUERY3 %}
+            <tr>
+                <td> {{ q.field_name }} </td>
+                <td> {{ q.proj_title }} </td>
+                <td> {{ q.Researcher_Name }} </td>
+                <td> {{ q.Researcher_Role }} </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+
+
+</body>
+</html>

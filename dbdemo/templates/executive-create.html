@@ -1,0 +1,35 @@
+{% extends "global_style2.html" %}
+{% block content %}
+
+<h2 style="color:DarkRed">Add an Executive</h2>
+
+<h3></h3>
+
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" name="executive-form" method="POST">
+                <!-- hidden_tag returns the form's security metadata -->
+                {{ form.hidden_tag() }}
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.first_name.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.first_name(class = "form-control", placeholder="Enter First Name", required = False) }}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.last_name.label(class = "form-label") }}
+                    {{ form.last_name(class = "form-control", placeholder="Enter Last Name", required = False) }}
+                </div>
+                {{ form.submit(class = "btn btn-primary btn-submit-custom") }}
+            </form>
+    </div>
+    </div>
+</div>
+
+
+<h2 style="color:DarkRed">Update/Delete Executives</h2>
+<a href="http://localhost:3000/executives/delete-update">click here
+</a>
+
+{% endblock content %}

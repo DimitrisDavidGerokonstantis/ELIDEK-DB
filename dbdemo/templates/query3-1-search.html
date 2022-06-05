@@ -1,0 +1,64 @@
+<script>
+let filters = ["",""];
+
+function setFilter(thisInput, thisIndex) {
+  filters[thisIndex] = thisInput.value.toUpperCase();
+
+  filterTable();
+}
+
+function filterTable() {
+  var table = document.getElementById("myTable");
+  var rows = Object.values(table.getElementsByTagName("tr"));
+
+  for(var rowItr=1; rowItr < rows.length; rowItr++) {
+    var row = rows[rowItr];
+    var cells = Object.values(row.getElementsByTagName("td"));
+
+
+    var isRowVisible = filters.every((filter, filterIndex) => {
+        var cell = cells[filterIndex];
+        var txtValue = cell.textContent || cell.innerText;
+
+        return filter === "" || txtValue.toUpperCase().indexOf(filter) > -1;
+    });
+
+    row.style.display = isRowVisible ? "" : "none";
+  };
+}
+</script>
+
+
+<input type="text" class="myInput" onkeyup="setFilter(this, 0)" placeholder="Search for program..." title="Search program">
+<input type="text" class="myInput" onkeyup="setFilter(this, 1)" placeholder="Search for project..." title="Search project">
+<input type="text" class="myInput" onkeyup="setFilter(this, 2)" placeholder="Search for starting date..." title="Search starting date">
+<input type="text" class="myInput" onkeyup="setFilter(this, 3)" placeholder="Search for duration..." title="Search duration">
+<input type="text" class="myInput" onkeyup="setFilter(this, 4)" placeholder="Search for executive..." title="Search executive">
+
+{% extends "global_style2.html" %}
+{% block content %}
+<table id="myTable">
+  <tr class="header">
+    <th style="width:4%;">Program Name</th>
+    <th style="width:9%;">Project Title</th>
+      <th style="width:1%;">Starting Date</th>
+    <th style="width:4%;">Duration</th>
+    <th style="width:4%;">Executive</th>
+    <th style="width:1%;">Researcher</th>
+    <th style="width:4%;">Researcher Role</th>
+  </tr>
+  <tbody>
+    {% for q in QUERY52 %}
+        <tr>
+          <td>{{q.prog_name}}</td>
+          <td>{{q.proj_title}}</td>
+          <td>{{q.starting_date}}</td>
+          <td>{{q.duration}}</td>
+          <td>{{q.exec_name}}</td>
+          <td>{{q.res_name}}</td>
+          <td>{{q.Researcher_Role}}</td>
+        </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endblock content %}

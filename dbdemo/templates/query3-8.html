@@ -1,0 +1,40 @@
+{% extends "global_style2.html" %}
+{% block content %}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                {% if QUERY8|length == 0 %}
+                    <!-- |length is a jinja2 filter that returns the amount of items in a sequence -->
+                    <h1 style="margin-top: 5rem;">No tuples found!</h1>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                  <th>RESEARCHER NAME</th>
+                                  <th>NUMBER OF PROJECTS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for q in QUERY8 %}
+                                    <tr>
+                                      <td> {{ q.Researcher_Name }} </td>
+                                      <td> {{ q.Number_Of_Projects }} </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

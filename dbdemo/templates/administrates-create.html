@@ -1,0 +1,40 @@
+{% extends "global_style2.html" %}
+{% block content %}
+
+<h2 style="color:DarkRed">Add an Administrating Relation</h2>
+<h3 style="color:DarkRed">Necessary Value is Researcher ID that you can find out here :
+<a href="http://localhost:3000/researchers/delete-update">Researchers
+</a>
+<h3 style="color:DarkRed">Necessary Value is Researcher ID that you can find out here :
+<a href="http://localhost:3000/required_evaluation/projects-delete-update">Projects
+</a>
+<h3></h3>
+
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" name="administrates-form" method="POST">
+                <!-- hidden_tag returns the form's security metadata -->
+                {{ form.hidden_tag() }}
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.project_id.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.project_id(class = "form-control", placeholder="Enter Project ID", required = False) }}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.res_id.label(class = "form-label") }}
+                    {{ form.res_id(class = "form-control", placeholder="Enter Researcher ID", required = False) }}
+                </div>
+                {{ form.submit(class = "btn btn-primary btn-submit-custom") }}
+            </form>
+    </div>
+    </div>
+</div>
+
+
+<h2 style="color:DarkRed">Update/Delete Administrating Relations</h2>
+<a href="http://localhost:3000/administrates/delete-update">click here
+</a>
+
+{% endblock content %}

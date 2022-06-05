@@ -1,0 +1,186 @@
+{% extends "global_style2.html" %}
+{% block content %}
+<h2></h2>
+<a href="http://localhost:3000/required_evaluation">Back : Evaluation
+</a>
+<h2></h2>
+<a href="http://localhost:3000/required_evaluation/projects">Back : Create Project
+</a>
+<h2></h2>
+<a href="http://localhost:3000/works_on">Back : Working Relation
+</a>
+<h2></h2>
+<a href="http://localhost:3000/administrates">Back : Administrating Relation
+</a>
+<!-- Edit modal -->
+<div id="editModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit Project</h3>
+            </div>
+            <div class="modal-body">
+                <form id="modal-form">
+                    {{ form.hidden_tag() }}
+                    <div style="text-align: center;">
+                        <input type="text" name="id" id="id" readonly>
+                        <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                        {{ form.project_id(id = "project_id", required = False) }}
+                        {{ form.org_name(id = "org_name", required = False) }}
+                        {{ form.title(id = "title", required = False) }}
+                        {{ form.summary(id = "summary", required = False) }}
+                        {{ form.grant_amount(id = "grant_amount", required = False) }}
+                        {{ form.starting_date(id = "starting_date", required = False) }}
+                        {{ form.ending_date(id = "ending_date", required = False) }}
+                        {{ form.evaluation_id(id = "evaluation_id", required = False) }}
+                        {{ form.executive_id(id = "executive_id", required = False) }}
+                        {{ form.program_id(id = "program_id", required = False) }}
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                {{ form.submit(class = "btn btn btn-success", form = "modal-form", value = "Update") }}
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete modal -->
+<div class = "modal fade" id="deleteModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h3 class = "modal-title" id = "deleteModalLabel">Delete Project</h3>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                Project will be deleted. Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "delete-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                {% if QUERY21|length == 0 %}
+                    <h1 style="margin-top: 5rem;">No Projects found!</h1>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>PROJECT ID</th>
+                                    <th>ORG NAME</th>
+                                    <th>TITLE</th>
+                                    <th>SUMMARY</th>
+                                    <th>GRANT AMOUNT</th>
+                                    <th>STARTING DATE</th>
+                                    <th>ENDING DATE</th>
+                                    <th>EVALUATION ID</th>
+                                    <th>EXECUTIVE ID</th>
+                                    <th>PROGRAM ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for q in QUERY21 %}
+                                    <tr>
+                                        <td> {{q.project_id }} </td>
+                                        <td> {{ q.org_name }} </td>
+                                        <td> {{ q.title }} </td>
+                                        <td> {{ q.summary }} </td>
+                                        <td> {{ q.grant_amount }} </td>
+                                        <td> {{ q.starting_date }} </td>
+                                        <td> {{ q.ending_date }} </td>
+                                        <td> {{ q.evaluation_id }} </td>
+                                        <td> {{ q.executive_id }} </td>
+                                        <td> {{ q.program_id }} </td>
+                                        <td>
+                                            <button onclick="setModalFields(this); scrolling();"
+                                            data-toggle="modal"
+                                            data-id="{{ q.project_id }}"
+                                            data-org_name="{{q.org_name}}"  data-title= "{{q.title}}"
+                                            data-summary="{{q.summary}}" data-grant_amount="{{q.grant_amount}}"
+                                            data-starting_date="{{q.starting_date}}"
+                                            data-ending_date="{{q.ending_date}}"
+                                            data-evaluation_id="{{ q.evaluation_id }}"
+                                            data-executive_id="{{ q.executive_id }}"
+                                            data-program_id="{{ q.program_id }}"
+                                            data-bs-toggle = "modal"
+                                            data-bs-target="#editModal">
+                                                <i class="fa fa-edit"></i>
+                                            Update
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button  type = "button"
+                                            data-bs-toggle = "modal" data-bs-target = "#deleteModal"
+                                            data-id = "{{ q.project_id }}" onclick = "setDeleteModalFields(this); scrolling();">
+                                                <i class = "fa fa-trash"></i>
+                                            Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+</script>
+
+<script>
+    function setModalFields(row) {
+        document.getElementById("project_id").value = row.getAttribute("data-id");
+        document.getElementById("org_name").value = row.getAttribute("data-org_name");
+        document.getElementById("title").value = row.getAttribute("data-title");
+        document.getElementById("summary").value = row.getAttribute("data-summary");
+        document.getElementById("grant_amount").value = row.getAttribute("data-grant_amount");
+        document.getElementById("starting_date").value = row.getAttribute("data-starting_date");
+        document.getElementById("ending_date").value = row.getAttribute("data-ending_date");
+        document.getElementById("evaluation_id").value = row.getAttribute("data-evaluation_id");
+        document.getElementById("executive_id").value = row.getAttribute("data-executive_id");
+        document.getElementById("program_id").value = row.getAttribute("data-program_id");
+        document.getElementById("modal-form").action = "/required_evaluation/projects-delete-update/update/" + row.getAttribute("data-id");
+        document.getElementById("modal-form").method = "POST";
+        // document.getElementById("submit").addEventListener("click", (e) => {e.preventDefault();});
+        // commented line above would prevent the default behavior of the submit button, that is, sending the
+        // form data with a post request to the determined address and subsequently closing the pop-up
+    }
+
+    function setDeleteModalFields(row) {
+        document.getElementById("delete-modal-form").action = "/required_evaluation/projects-delete-update/delete/" + row.getAttribute("data-id");
+        document.getElementById("delete-modal-form").method = "POST";
+    }
+</script>
+
+<script type="text/javascript">
+    function scrolling(){
+   window.scrollTo(0,0);
+    }
+</script>
+
+
+{% endblock content %}

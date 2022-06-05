@@ -1,0 +1,143 @@
+{% extends "global_style2.html" %}
+{% block content %}
+<h2></h2>
+<a href="http://localhost:3000/executives">Back : Create Executives
+</a>
+<h2></h2>
+<!-- Edit modal -->
+<div id="editModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit Executive</h3>
+            </div>
+            <div class="modal-body">
+                <form id="modal-form">
+                    {{ form.hidden_tag() }}
+                    <div style="text-align: center;">
+                        <input type="text" name="id" id="id" readonly>
+                        <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                        {{ form.executive_id(id = "executive_id", required = False) }}
+                        {{ form.first_name(id = "first_name", required = False) }}
+                        {{ form.last_name(id = "last_name", required = False) }}
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                {{ form.submit(class = "btn btn btn-success", form = "modal-form", value = "Update") }}
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete modal -->
+<div class = "modal fade" id="deleteModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h3 class = "modal-title" id = "deleteModalLabel">Delete Executive</h3>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                Executive will be deleted. Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "delete-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                {% if QUERY42|length == 0 %}
+                    <h1 style="margin-top: 5rem;">No "Easter Egg 2 : Twitter password -> **************** " found!</h1>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>EXECUTIVE ID</th>
+                                    <th>FIRST NAME</th>
+                                    <th>LAST NAME</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for q in QUERY42 %}
+                                    <tr>
+                                        <td> {{q.executive_id }} </td>
+                                        <td> {{ q.first_name }} </td>
+                                        <td> {{ q.last_name }} </td>
+                                        <td>
+                                            <button onclick="setModalFields(this); scrolling();"
+                                            data-toggle="modal"  data-id="{{ q.executive_id }}"
+                                            data-first_name="{{q.first_name}}"  data-last_name= "{{q.last_name}}"
+                                            data-bs-toggle = "modal"
+                                            data-bs-target="#editModal">
+                                                <i class="fa fa-edit"></i>
+                                            Update
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button  type = "button"
+                                            data-bs-toggle = "modal" data-bs-target = "#deleteModal"
+                                            data-id = "{{ q.executive_id }}" onclick = "setDeleteModalFields(this); scrolling();">
+                                                <i class = "fa fa-trash"></i>
+                                            Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+</script>
+
+<script>
+    function setModalFields(row) {
+        document.getElementById("executive_id").value = row.getAttribute("data-id");
+        document.getElementById("first_name").value = row.getAttribute("data-first_name");
+        document.getElementById("last_name").value = row.getAttribute("data-last_name");
+        document.getElementById("modal-form").action = "/executives/delete-update/update/" + row.getAttribute("data-id");
+        document.getElementById("modal-form").method = "POST";
+        // document.getElementById("submit").addEventListener("click", (e) => {e.preventDefault();});
+        // commented line above would prevent the default behavior of the submit button, that is, sending the
+        // form data with a post request to the determined address and subsequently closing the pop-up
+    }
+
+    function setDeleteModalFields(row) {
+        document.getElementById("delete-modal-form").action = "/executives/delete-update/delete/" + row.getAttribute("data-id");
+        document.getElementById("delete-modal-form").method = "POST";
+    }
+</script>
+
+<script type="text/javascript">
+    function scrolling(){
+    window.scrollTo(0,0);
+    }
+</script>
+
+
+{% endblock content %}
